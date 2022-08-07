@@ -4,6 +4,9 @@ import { nanoid } from 'nanoid';
 import ContactForm from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import Filter from './Filter/Filter';
+
+
+
 class App extends React.Component {
   state = {
     contacts: [
@@ -17,6 +20,7 @@ class App extends React.Component {
 
   onSubmitForm = ({ name, number }) => {
     const contact = { name, number, id: nanoid() };
+    
     this.setState(({ contacts }) => {
       return contacts.some(
         contact => contact.name.toLowerCase() === name.toLowerCase()
@@ -44,8 +48,11 @@ class App extends React.Component {
   };
 
   componentDidMount = () => {
-     const contacts = JSON.parse(localStorage.getItem('Contacts'))
-     this.setState({contacts:contacts})
+    const contacts = JSON.parse(localStorage.getItem('Contacts'))
+     
+    if (contacts) {
+      this.setState({ contacts: contacts })
+    }
   }
   componentDidUpdate  (prevProps, prevState ){
     if (prevState.contacts !== this.state.contacts) {
